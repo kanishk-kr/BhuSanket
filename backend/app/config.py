@@ -68,13 +68,19 @@ class Settings(BaseSettings):
     @property
     def celery_broker_url(self) -> str:
         if self.redis_url_env:
-            return self.redis_url_env
+            url = self.redis_url_env
+            if url.startswith("rediss://") and "ssl_cert_reqs=" not in url:
+                url += "&ssl_cert_reqs=CERT_NONE" if "?" in url else "?ssl_cert_reqs=CERT_NONE"
+            return url
         return f"redis://{self.redis_host}:{self.redis_port}/1"
 
     @property
     def celery_result_backend(self) -> str:
         if self.redis_url_env:
-            return self.redis_url_env
+            url = self.redis_url_env
+            if url.startswith("rediss://") and "ssl_cert_reqs=" not in url:
+                url += "&ssl_cert_reqs=CERT_NONE" if "?" in url else "?ssl_cert_reqs=CERT_NONE"
+            return url
         return f"redis://{self.redis_host}:{self.redis_port}/2"
 
     # --- JWT ---
