@@ -1,0 +1,323 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════
+   BhuSanket Design System — Premium Government Intelligence UI
+   ═══════════════════════════════════════════════════════════════ */
+
+@theme inline {
+  --color-primary: #FFFFFF;
+  --color-primary-light: #F8FAFC;
+  --color-accent: #2563EB;
+  --color-accent-hover: #1D4ED8;
+  --color-accent-glow: rgba(37, 99, 235, 0.15);
+  --color-surface: #F1F5F9;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-card: rgba(255, 255, 255, 0.85);
+  --color-border: rgba(15, 23, 42, 0.12);
+  --color-border-active: rgba(37, 99, 235, 0.4);
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #334155;
+  --color-text-muted: #64748B;
+
+  /* Risk Colors */
+  --color-risk-green: #10B981;
+  --color-risk-amber: #F59E0B;
+  --color-risk-red: #EF4444;
+  --color-risk-critical: #DC2626;
+
+  /* Clock Alert Colors */
+  --color-clock-green: #059669;
+  --color-clock-amber: #D97706;
+  --color-clock-red: #DC2626;
+  --color-clock-critical: #991B1B;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+/* Google Fonts imported at top */
+
+/* Global Styles */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glassmorphism Card */
+.glass-card {
+  background: var(--color-surface-card);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  border-color: var(--color-border-active);
+  box-shadow: 0 0 30px var(--color-accent-glow);
+}
+
+/* Gradient Backgrounds */
+.gradient-mesh {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 40% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 50%),
+    var(--color-surface);
+}
+
+/* Animated Gradient Border */
+.gradient-border {
+  position: relative;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-card);
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6, #10B981, #3B82F6);
+  background-size: 300% 300%;
+  animation: gradient-rotate 8s ease infinite;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+@keyframes gradient-rotate {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Risk Score Badge */
+.risk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.risk-badge.green { background: rgba(16, 185, 129, 0.15); color: #34D399; }
+.risk-badge.amber { background: rgba(245, 158, 11, 0.15); color: #FBBF24; }
+.risk-badge.red { background: rgba(239, 68, 68, 0.15); color: #F87171; }
+.risk-badge.critical { background: rgba(220, 38, 38, 0.2); color: #FCA5A5; }
+
+/* Clock Alert Badge */
+.clock-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.clock-badge.GREEN { background: rgba(5, 150, 105, 0.15); color: #6EE7B7; }
+.clock-badge.AMBER { background: rgba(217, 119, 6, 0.15); color: #FCD34D; }
+.clock-badge.RED { background: rgba(220, 38, 38, 0.15); color: #FCA5A5; }
+.clock-badge.CRITICAL {
+  background: rgba(153, 27, 27, 0.25);
+  color: #FCA5A5;
+  animation: pulse-critical 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-critical {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Stat Card */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, var(--color-accent-glow) 0%, transparent 70%);
+  opacity: 0.5;
+}
+
+/* Progress Bar */
+.progress-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Navigation */
+.nav-item {
+  position: relative;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background: rgba(59, 130, 246, 0.08);
+  color: var(--color-text-primary);
+}
+
+.nav-item.active {
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--color-accent);
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: var(--color-accent);
+  border-radius: 2px;
+}
+
+/* Table Styles */
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.data-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.data-table td {
+  padding: 14px 16px;
+  font-size: 0.875rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+}
+
+.data-table tr:hover td {
+  background: rgba(59, 130, 246, 0.04);
+}
+
+/* Micro Animations */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slide-in-left 0.3s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out forwards;
+}
+
+/* Stagger children animations */
+.stagger-children > * {
+  opacity: 0;
+  animation: fade-in 0.4s ease-out forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+
+/* MapLibre Overrides */
+.maplibregl-map {
+  border-radius: var(--radius-lg);
+}
+
+.maplibregl-popup-content {
+  background: var(--color-surface-elevated) !important;
+  color: var(--color-text-primary) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 12px 16px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Tooltip */
+.tooltip {
+  position: relative;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 12px;
+  background: var(--color-primary);
+  color: var(--color-text-primary);
+  font-size: 0.75rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  border: 1px solid var(--color-border);
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+}
