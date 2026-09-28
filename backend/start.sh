@@ -1,8 +1,7 @@
 #!/bin/bash
 # start.sh - Run API, Celery Worker, and Celery Beat in a single container for free tier hosting
 
-# Run migrations
-alembic upgrade head
+# SQLAlchemy creates tables in main.py
 
 # Start Celery Beat in the background
 celery -A app.worker beat --loglevel=info &

@@ -4,6 +4,7 @@ Uses pydantic-settings for validation and type safety.
 """
 
 from functools import lru_cache
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -30,9 +31,14 @@ class Settings(BaseSettings):
     postgres_db: str = "bhusanket"
     postgres_user: str = "bhusanket_user"
     postgres_password: str = "bhusanket_dev_password"
+    database_url_env: str | None = Field(default=None, alias="DATABASE_URL")
 
     @property
     def database_url(self) -> str:
+        if self.database_url_env:
+            if self.database_url_env.startswith("postgresql://"):
+                return self.database_url_env.replace("postgresql://", "postgresql+asyncpg://", 1)
+            return self.database_url_env
         return (
             f"postgresql+asyncpg://{self.postgres_user}:{self.postgres_password}"
             f"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
@@ -41,6 +47,8 @@ class Settings(BaseSettings):
     @property
     def database_url_sync(self) -> str:
         """Sync URL for Alembic migrations."""
+        if self.database_url_env:
+            return self.database_url_env
         return (
             f"postgresql://{self.postgres_user}:{self.postgres_password}"
             f"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
@@ -49,17 +57,24 @@ class Settings(BaseSettings):
     # --- Redis ---
     redis_host: str = "redis"
     redis_port: int = 6379
+    redis_url_env: str | None = Field(default=None, alias="REDIS_URL")
 
     @property
     def redis_url(self) -> str:
+        if self.redis_url_env:
+            return self.redis_url_env
         return f"redis://{self.redis_host}:{self.redis_port}/0"
 
     @property
     def celery_broker_url(self) -> str:
+        if self.redis_url_env:
+            return self.redis_url_env
         return f"redis://{self.redis_host}:{self.redis_port}/1"
 
     @property
     def celery_result_backend(self) -> str:
+        if self.redis_url_env:
+            return self.redis_url_env
         return f"redis://{self.redis_host}:{self.redis_port}/2"
 
     # --- JWT ---
