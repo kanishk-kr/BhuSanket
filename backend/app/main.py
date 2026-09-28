@@ -71,6 +71,16 @@ app.include_router(geo_router, prefix=prefix)
 app.include_router(dashboard_router, prefix=prefix)
 
 
+from app.seed.seed_db import run_seed
+
+@app.get("/seed")
+async def seed_database():
+    try:
+        await run_seed()
+        return {"status": "success", "message": "Database seeded successfully!"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
 @app.get("/health")
 async def health_check():
     return {"status": "healthy", "service": "bhusanket-api", "version": "0.1.0"}
