@@ -1,0 +1,51 @@
+# === Core Framework ===
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+gunicorn==23.0.0
+python-multipart==0.0.20
+
+# === Database ===
+sqlalchemy==2.0.36
+asyncpg==0.30.0
+alembic==1.14.1
+geoalchemy2==0.15.2
+
+# === Authentication & Security ===
+pyjwt[crypto]==2.10.1
+passlib[bcrypt]==1.7.4
+bcrypt==3.2.2
+python-jose[cryptography]==3.3.0
+
+# === Validation & Serialization ===
+pydantic==2.10.4
+pydantic-settings==2.7.1
+
+# === Task Queue ===
+celery[redis]==5.4.0
+redis==5.2.1
+
+# === ML & Prediction ===
+lightgbm==4.5.0
+scikit-learn==1.6.1
+scikit-survival==0.24.0
+shap==0.46.0
+numpy==2.2.1
+pandas==2.2.3
+scipy==1.15.0
+
+# === GIS ===
+shapely==2.0.6
+geopandas==1.0.1
+geojson==3.2.0
+
+# === Monitoring & Logging ===
+prometheus-fastapi-instrumentator==7.0.2
+structlog==24.4.0
+
+# === Utilities ===
+httpx==0.28.1
+python-dotenv==1.0.1
+orjson==3.10.13
+tenacity==9.0.0
+boto3==1.36.2
+Faker==33.3.1
